@@ -1,25 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useParams} from "react-router-dom";
+import React from 'react';
 import {Container} from 'react-bootstrap';
-import {Image} from 'react-bootstrap/Image';
 
 const UserLogo = (props) => {
 
-    const {user} = useState();
+    const {user} = props;
 
     const imagePicker = (user) => {
-        if(user)
-    }
+        let iconImage = null;
+        if( user !== null ) {
+            iconImage=user.profileImage;
+        }
+        else{
+            iconImage="/assets/defaults/userIcon.jpg";
+        }
+        return iconImage;
+    };
 
     return (
         <div>
             <Container>
-                <div 
-                    >
-
+                <div>
+                    <img 
+                        src={imagePicker(user)} 
+                        alt="user icon"  
+                        style={{ height: "5rem", width: "5rem", border: ".01rem solid black", borderRadius: "50%"}}
+                    />
                 </div>
-                    <img src="/assets/defaults/userIcon.jpg" alt="user icon"  style={{ height: "5rem", border: ".01rem solid black", borderRadius: "50%"}}/>
             </Container>
         </div>
     )
