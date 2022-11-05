@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import ProjectIcon from "../components/sub-components/ProjectIcon.js";
 
 const Home = () => {
 
@@ -25,8 +26,12 @@ const Home = () => {
         <Container>
             {userAndProjectList.projects.map((project,index)=>
                 <div key={index}>
-                    <p onClick={navigate(`/project/${projects._id}`)}>{project.projectName}</p>
-                    <img src="" alt={}></img>
+                    <p onClick={navigate(`/project/${project._id}`)}>{project.projectName}</p>
+                    <img 
+                        src={ project.projectImage? project.projectImage : <ProjectIcon /> } 
+                        alt= "Project Image"
+                        onClick={navigate(`/project/${project._id}`)}
+                    />
                 </div>
             )}
         </Container>

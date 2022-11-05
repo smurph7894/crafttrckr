@@ -21,6 +21,9 @@ const ProjectSchema = new mongoose.Schema({
             message: 'You must have at least one tag.'
         }
     },
+    projectImage:{
+        type: String
+    },
     content: {
         type: String
     }

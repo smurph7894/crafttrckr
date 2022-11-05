@@ -23,8 +23,8 @@ const Login = () => {
             .catch((err)=>{
                 console.log("error.response.data.errors:", err.response.data.errors);
                 setError("Your email or password is incorrect. ");
-            })
-    }
+            });
+    };
 
     return (
         <Container>
