@@ -1,33 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
-import {Container, Col, Row} from 'react-bootstrap';
+import {useNavigate} from "react-router-dom";
+import {Container, Row} from 'react-bootstrap';
+import ProjectEditor from '../components/ProjectEditor';
+import Header from '../components/Header';
+import { useReactiveVar } from '@apollo/client';
+import { userState } from '../GlobalState';
 
 const NewProject = () => {
 
-    const {id} = useParams;
-    const [user, setUser] = useState();
-    const [newProject, setNewProject] = useState();
+    const user = useReactiveVar(userState);
+    const [newProject, setNewProject] = useState({
+        projectName: "",
+        projectImage: "",
+        tags: [],
+        creatorId: "",
+        content: ""
+    });
     const [error, setError] = useState();
 
     const navigate = useNavigate();
-
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/user/${id}`)
-            .then((res)=>{
-                console.log(res.data);
-                setUser(res.data);
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
-        }, [id]);
 
         const onNewProjectSubmitted=(e)=>{
             e.preventDefault();
             axios.post("http://localhost:8000/api/crafttrckr/project", {newProject})
                 .then((res)=>{
                     console.log(res.data.user);
+                    //get id from server
                     navigate(`/project/${newProject._id}`);
                 })
                 .catch((err)=>{
@@ -38,7 +37,18 @@ const NewProject = () => {
 
     return (
         <Container>
-            
+            <Row>
+                <Header />
+            </Row>
+            <Row>
+                <ProjectEditor 
+                    submitHandler = {onNewProjectSubmitted}
+                    user = {user}
+                    project = {newProject}
+                    setProject = {setNewProject}
+                    error = {error}
+                />
+            </Row>
         </Container>
     )
 }

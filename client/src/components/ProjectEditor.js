@@ -1,12 +1,13 @@
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from 'draft-js';
+import React, { useState } from 'react';
+import { Container, Form, Row, Col } from 'react-bootstrap';
+import { Editor} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Form } from 'react-router-dom';
 
-const ProjectEditor = () => {
+const ProjectEditor = (props) => {
 
-    const {project, setProject, user, }
+    const {project, error, setProject, user, submitHandler } = props;
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const onChangeHandler = (e)=>{
         const newProjectObject = {...project};
@@ -17,6 +18,10 @@ const ProjectEditor = () => {
         console.log("e.target.value = ", e.target.value);
 
         setProject(newProjectObject);
+    };
+
+    const onEditorStateChange = (editorState) => {
+        setEditorState( editorState );
     };
 
     return (
@@ -31,19 +36,25 @@ const ProjectEditor = () => {
                         onChange={(e)=> onChangeHandler(e)}
                     />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group style={{visibility: "hidden", border:"2px solid black"}}>
                     <Editor
                         editorState={editorState}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"
                         editorClassName="editorClassName"
-                        onEditorStateChange={this.onEditorStateChange}
+                        onEditorStateChange={onEditorStateChange}
+                    />
+                    <Form.Control
+                        value={editorState.getCurrentContent().getPlainText('\u0001')}
+                        type="text"
+                        name="content"
+                        onChange={()=> console.log("ignore")}
                     />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Project Image:</Form.Label>
                     <Form.Control
-                        // type="text"
+                        type="text"
                         name="projectImage"
                         value={project.projectImage}
                         onChange={(e)=> onChangeHandler(e)}
@@ -61,6 +72,8 @@ const ProjectEditor = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Control
+                        style={{visibility: "hidden"}}
+                        type="text"
                         value={user._id}
                         name="creatorId"
                         onChange={(e)=> onChangeHandler(e)}

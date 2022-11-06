@@ -1,18 +1,21 @@
+import { useReactiveVar } from '@apollo/client';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import ProjectIcon from "../components/sub-components/ProjectIcon.js";
+import Header from "../components/Header";
+import { userState } from '../GlobalState.js';
 
 const Home = () => {
 
-    const {id} = useParams();
+    const user = useReactiveVar(userState);
     const [ userAndProjectList, setUserAndProjectList] = useState();
 
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/user/${id}`)
+        axios.get(`http://localhost:8000/api/crafttrckr/user/${user._id}`)
             .then((res)=>{
                 console.log(res.data);
                 setUserAndProjectList(res.data);
@@ -20,10 +23,11 @@ const Home = () => {
             .catch((err)=>{
                 console.log(err);
             });
-        }, [id]);
+        }, [user._id]);
 
     return (
         <Container>
+            <Header />
             {userAndProjectList.projects.map((project,index)=>
                 <div key={index}>
                     <p onClick={navigate(`/project/${project._id}`)}>{project.projectName}</p>

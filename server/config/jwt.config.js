@@ -5,6 +5,7 @@ module.exports.authenticate = (req, res, next) => {
             res.status(401).json({verified: false});
         } else {
             req.userId = payload.id;
+            //req.userId is the users ObjectID returned from jwt-token (created at login) without scrambled key
             next();
         }
     });

@@ -7,6 +7,7 @@ module.exports = (app) => {
 
     app.post("/api/crafttrckr/user/register", UserController.createNewUser);
     app.post("/api/crafttrckr/user/login", UserController.login);
+    app.get("/api/crafttrckr/logginguser", authenticate, UserController.loggedInUser);
     app.get("/api/user/crafttrckr/user", authenticate, UserController.findAllUsers);
     app.get("/api/crafttrckr/user/:id", authenticate, UserController.findOneUserWithProjects);
     app.put("/api/crafttrckr/user/:id", authenticate, UserController.updateUser);

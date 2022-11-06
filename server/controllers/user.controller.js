@@ -22,6 +22,17 @@ module.exports = {
             });
     },
 
+    loggedInUser: (req, res)=> {
+        User.findOne({_id: req.userId},{password: 0})
+            .then((loggedUser)=>{
+                console.log(loggedUser);
+                res.json(loggedUser);
+            })
+            .catch ((err)=>{
+                console.log("find LOGGED IN users failed");
+            });
+    },
+
     login: async(req, res) => {
         const user = await User.findOne({ email: req.body.email });
         if( user === null ) {

@@ -3,13 +3,14 @@ import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
 import ImageCollage from './ImageCollage';
+import { useReactiveVar } from '@apollo/client';
+import { userState } from '../GlobalState';
 
 const Login = () => {
 
     const[error, setError] = useState({});
     const [userEmail, setUserEmail] = useState();
     const [userPassword, setUserPassword] = useState();
-    const [user, setUser] = useState();
     const navigate = useNavigate();
 
     const onLoginHandler=(e)=>{
@@ -17,8 +18,8 @@ const Login = () => {
         axios.post("http://localhost:8000/api/crafttrckr/user/login", {email: userEmail, password: userPassword})
             .then((res)=>{
                 console.log(res.data.user);
-                setUser(res.data.user);
-                navigate(`/user/${user._id}`);
+                userState(res.data.user);
+                navigate(`/user/${res.data.user._id}`);
             })
             .catch((err)=>{
                 console.log("error.response.data.errors:", err.response.data.errors);
