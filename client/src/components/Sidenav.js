@@ -13,6 +13,7 @@ function Sidenav() {
     const logout = () => {
         axios.post(`http://localhost:8000/api/crafttrckr/user/logout`)
             .then((res)=>{
+                userState(undefined);
                 navigate(`/`);
             })
             .catch((err)=>{

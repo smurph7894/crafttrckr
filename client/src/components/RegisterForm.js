@@ -23,7 +23,7 @@ const RegisterForm = () => {
         axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
             .then((res)=>{
                 // console.log(res.data);
-                setUser(res.data.user);
+                setUser(res.data);
                 navigate(`/home`);
             })
             .catch((err)=>{

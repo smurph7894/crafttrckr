@@ -26,6 +26,8 @@ const Home = () => {
             });
         }, [user._id]);
 
+    console.log(userAndProjectList);
+
     if(!userAndProjectList) {
         return null;
     }

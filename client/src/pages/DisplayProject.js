@@ -34,7 +34,7 @@ const DisplayProject = () => {
     };
 
     const editorState = useMemo(()=>{
-        if (!project) {
+        if (!project || !project.content) {
             return EditorState.createEmpty();
         }
         return EditorState.createWithContent(convertFromRaw(
@@ -62,7 +62,9 @@ const DisplayProject = () => {
                                 editorState={editorState} 
                                 readOnly={true} 
                             />
-                            <p>Tags:</p>
+                            <p
+                                style={{marginTop: "2rem"}}
+                            >Tags:</p>
                             <ul>
                                 {project.tags.map((tag, index)=>
                                     <li 
@@ -95,7 +97,7 @@ const DisplayProject = () => {
                     <   img 
                             src={`http://localhost:8000/files/${project.projectImage}`} 
                             alt="project cover photo"
-                            style={{width: "10rem", margin: "1rem 0rem"}}
+                            style={{width: "20rem", margin: "1rem 0rem"}}
                         />
                     </Col>
                 </Row>
