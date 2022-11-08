@@ -12,6 +12,8 @@ module.exports = {
                     id: newUser._id
                 };
                 const userToken = jwt.sign(payload, process.env.FIRST_SECRET_KEY);
+                console.log("register res.data", newUser);
+                console.log("register userToken", userToken);
                 res.cookie("jwt-token", userToken, { httpOnly: true }).json(
                     newUser
                 );

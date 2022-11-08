@@ -3,13 +3,10 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {Button, Col, Container, Form, Row} from 'react-bootstrap';
 import Header from '../components/Header';
-import { useReactiveVar } from '@apollo/client';
-import { userState } from '../GlobalState';
 import Sidenav from '../components/Sidenav';
 
 const NewProject = () => {
 
-    const user = useReactiveVar(userState);
     const [newProject, setNewProject] = useState({
         projectName: "",
         projectImage: "",

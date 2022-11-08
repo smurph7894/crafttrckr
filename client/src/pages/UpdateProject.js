@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Container, Col, Row} from 'react-bootstrap';
-import { useReactiveVar } from '@apollo/client';
-import { userState } from '../GlobalState';
 import Sidenav from '../components/Sidenav';
 import ProjectEditor from '../components/ProjectEditor';
 import Header from '../components/Header';
@@ -11,11 +9,9 @@ import Header from '../components/Header';
 const UpdateProject = () => {
 
     const {id} = useParams();
-    const user = useReactiveVar(userState);
     const [editProject, setEditProject] = useState();
     const [error, setError] = useState({});
     const [file, setFile] = useState();
-    const navigate = useNavigate();
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)

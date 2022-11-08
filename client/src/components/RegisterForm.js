@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
+import { userState } from '../GlobalState';
 
 const RegisterForm = () => {
 
     const[error, setError] = useState({});
-    const [user, setUser] = useState();
     const [newUser, setNewUser] = useState({
         firstName: "",
         lastName: "",
@@ -22,8 +22,8 @@ const RegisterForm = () => {
         e.preventDefault();
         axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
             .then((res)=>{
-                // console.log(res.data);
-                setUser(res.data);
+                console.log("registerForm", res.data);
+                userState(res.data);
                 navigate(`/home`);
             })
             .catch((err)=>{
