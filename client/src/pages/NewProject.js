@@ -13,7 +13,7 @@ const NewProject = () => {
     const [newProject, setNewProject] = useState({
         projectName: "",
         projectImage: "",
-        tags: [],
+        tags: "",
         creatorId: "",
         content: "",
         projectMedia: []
@@ -40,17 +40,21 @@ const NewProject = () => {
                     setError({general: {message: "Something went wrong when creating your project."}});
                 }
                 else{
-                    setError(err.response.data.errors);
+                    setError(err.response.data.errors || {general: {message: "Something went wrong when creating your project."}});
                 }
             });
     };
 
     const onChangeHandler = (e)=>{
+        console.log("changehandler");
         const newProjectObject = {...newProject};
+        console.log("one", newProjectObject);
         newProjectObject[e.target.name] = e.target.value;
         console.log("e.target.name = ", e.target.name);
         setNewProject(newProjectObject);
     };
+
+    console.log(error);
 
     return (
         <Container>
@@ -80,20 +84,6 @@ const NewProject = () => {
                                 :null
                                 }
                             </Form.Group>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group style={{margin: "1rem 0rem 1rem 0rem"}}>
-                                    <Form.Label>Project Cover Image:</Form.Label>
-                                    <Form.Control
-                                        type="file"
-                                        name="projectImage"
-                                        accept="image/png, image/jpeg"
-                                        onChange={(e)=> onChangeHandler(e)}
-                                    />
-                                </Form.Group>
-                            </Col>
-                            <Col></Col>
                         </Row>
                         <Row>
                             <Form.Group style={{margin: "1rem 0rem 1.5rem 0rem"}}>

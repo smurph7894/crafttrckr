@@ -34,7 +34,7 @@ const UpdateProject = () => {
         axios.put(`http://localhost:8000/api/crafttrckr/project/${id}`, editProject)
             .then((res)=>{
                 console.log("******",res);
-                navigate(`/project/${id}/edit`);
+                refreshPage();
             })
             .catch((err)=>{
                 console.log(err);
@@ -52,7 +52,11 @@ const UpdateProject = () => {
             formData, 
             {headers:{"Content-Type": "multipart/form-data"}}
         );
-        navigate(`/project/${id}/edit`);
+        refreshPage();
+    };
+
+    const refreshPage=()=>{
+        window.location.reload(false);
     };
 
     if(!editProject) {

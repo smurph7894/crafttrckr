@@ -3,10 +3,11 @@ const Project = require('../models/project.model');
 module.exports = {
 
     createNewProject: (req, res)=> {
+        console.log(req.body.tags);
         const createObject = {
             ...req.body, 
             creatorId: req.userId,
-            tags: req.body.tags.split(',')
+            tags: req.body.tags ? req.body.tags.split(',') : []
         };
         console.log(createObject);
         Project.create(createObject)
