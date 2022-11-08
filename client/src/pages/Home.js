@@ -40,16 +40,15 @@ const Home = () => {
                     <Sidenav />
                 </Col>
                 <Col xs lg={9}>
-                    {userAndProjectList.projects.map((project,index)=>
-                    <div key={index}>
-                        <p onClick={()=>navigate(`/project/${project._id}`)}>{project.projectName}</p>
-                        {/* <img 
-                            src={ project.projectImage? project.projectImage : <ProjectIcon /> } 
-                            alt= "Project Image"
-                            onClick={navigate(`/project/${project._id}`)}
-                        /> */}
-                    </div>
-                    )}
+                    <Row>
+                        {userAndProjectList.projects.map((project,index)=>
+                        <Col xs={3} key={index}>
+                            <ProjectIcon 
+                            oneProject={project}
+                            />
+                        </Col>
+                        )}
+                    </Row>
                 </Col>
             </Row>
         </Container>

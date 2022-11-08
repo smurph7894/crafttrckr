@@ -29,16 +29,28 @@ const Header = () => {
     return (
         <Container>
             <Row style={{padding: ".5rem"}}>
-                <h1 style={{margin: "1.5rem 0rem", padding: "0", fontWeight:"800", color: "blue"}}>CRAFT TRCKR</h1>
-            </Row>
-            <Row>
                 <Col>
-                    <UserLogo 
-                        user={user}
-                    />
+                    <Row>
+                        <Col style={{textAlign: "left", padding: "0rem 3.5rem"}}>
+                            <UserLogo 
+                                user={user}
+                            />
+                            <h4>{user.username}</h4>
+                        </Col>
+                    </Row>
                 </Col>
                 <Col>
-                    <Row>{user.userName}</Row>
+                    <h1 
+                        style={{
+                            margin: "1.5rem 0rem", 
+                            padding: "0", 
+                            fontWeight:"800", 
+                            color: "blue",
+                            textAlign: "center"
+                        }}
+                        >CRAFT TRCKR
+                    </h1>
+                </Col>
                     {/* <Row>
                         <input 
                             type="checkbox" 
@@ -47,7 +59,6 @@ const Header = () => {
                         >Follow {user.userName}</input>
                     </Row> */}
                     {/* look at adding a follow creator option */}
-                </Col>
                 <Col>
                     <Row>
                         {/* <Form onSubmit={onSubmitSearch}>

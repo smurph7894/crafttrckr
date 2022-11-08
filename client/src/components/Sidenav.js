@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import {Container, Nav, Navbar} from 'react-bootstrap';
+import {Col, Container, Nav, Navbar} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { userState } from '../GlobalState';
 
@@ -22,10 +22,16 @@ function Sidenav() {
 
     return (
         <>
-            <Nav className="flex-column">
-                    <Nav.Link href={`/home`}>Home</Nav.Link>
-                    <Nav.Link onClick={logout}>Logout</Nav.Link>
-            </ Nav>
+        <Container>
+            <Col xs lg={9}>
+                <Nav className="flex-column" style={{border: "2px solid black"}}>
+                        <Nav.Link style={{  borderBottom: "1px solid grey" }} href={`/home`}>Home</Nav.Link>
+                        <Nav.Link style={{  borderBottom: "1px solid grey" }} href={`/project/new`}>Create Project</Nav.Link>
+                        <Nav.Link onClick={logout}>Logout</Nav.Link>
+                </ Nav>
+            </Col>
+            <Col xs lg={3}> </Col>
+        </Container>
         </>
     )
 }

@@ -14,6 +14,7 @@ const UpdateProject = () => {
     const user = useReactiveVar(userState);
     const [editProject, setEditProject] = useState();
     const [error, setError] = useState({});
+    const [file, setFile] = useState();
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -33,13 +34,25 @@ const UpdateProject = () => {
         axios.put(`http://localhost:8000/api/crafttrckr/project/${id}`, editProject)
             .then((res)=>{
                 console.log("******",res);
-                navigate(`/project/${id}`);
+                navigate(`/project/${id}/edit`);
             })
             .catch((err)=>{
                 console.log(err);
                 console.log("error.response.data.errors:", err.response.data.errors);
                 setError(err.response.data.errors);
             });
+    };
+
+    const onCoverImageUpload = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('file', file);
+        axios.post(
+            `http://localhost:8000/api/crafttrckr/project/${id}/addFile`, 
+            formData, 
+            {headers:{"Content-Type": "multipart/form-data"}}
+        );
+        navigate(`/project/${id}/edit`);
     };
 
     if(!editProject) {
@@ -63,6 +76,9 @@ const UpdateProject = () => {
                             error={error}
                             setError={setError}
                             submitHandler={onEditProject}
+                            coverPhotoHandler={onCoverImageUpload}
+                            file={file}
+                            setFile={setFile}
                         />
                     </Col>
                 </Row>

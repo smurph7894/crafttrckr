@@ -5,23 +5,12 @@ const UserLogo = (props) => {
 
     const {user} = props;
 
-    const imagePicker = (user) => {
-        let iconImage = null;
-        if( user !== null ) {
-            iconImage=user.profileImage;
-        }
-        else{
-            iconImage="/assets/defaults/userIcon.jpg";
-        }
-        return iconImage;
-    };
-
     return (
         <div>
-            <Container>
+            <Container style={{padding: "0"}}>
                 <div>
                     <img 
-                        src={imagePicker(user)} 
+                        src="/assets/defaults/userIcon.jpg" 
                         alt="user icon"  
                         style={{ height: "5rem", width: "5rem", border: ".01rem solid black", borderRadius: "50%"}}
                     />

@@ -20,4 +20,6 @@ module.exports = (app) => {
     app.put("/api/crafttrckr/project/:id", authenticate, ProjectController.updateProject);
     app.delete("/api/crafttrckr/project/:id", authenticate, ProjectController.deleteProject);
 
+    app.post("/api/crafttrckr/project/:id/addFile", authenticate, ProjectController.uploadOneFile);
+
 };

@@ -6,17 +6,13 @@ import { Editor} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { userState } from '../GlobalState';
 
-const MAX_COUNT = 10;
-
 const ProjectEditor = (props) => {
 
     const user = useReactiveVar(userState);
-    const {project, error, setError, setProject, submitHandler } = props;
-    // const [coverImage, setCoverImage] = useState();
+    const {project, error, setError, setProject, submitHandler, coverPhotoHandler, file, setFile } = props;
     const [editorState, setEditorState] = useState( project.content? EditorState.createWithContent(convertFromRaw(
         JSON.parse(project.content)
     )) : EditorState.createEmpty());
-    // const [fileLimit, setFileLimit] = useState(false);
 
     const onChangeHandler = (e)=>{
         console.log("e",e);
@@ -29,39 +25,6 @@ const ProjectEditor = (props) => {
 
         setProject(newProjectObject);
     };
-
-    // const onFileLoad =(e)=>{
-    //     setCoverImage(e.target.files[0]);
-    //     console.log(e.target.files[0]);
-    //     const newProjectObject = {...project};
-
-    //     newProjectObject.projectImage = e.target.files[0];
-
-    //     setProject(newProjectObject);
-    // };
-    
-    // const handleUploadFiles = (files) => {
-    //     const uploaded = [...project.projectMedia];
-    //     let limitedExceeded = false;
-    //     files.some((file)=>{
-    //         if(uploaded.findIndex((f)=> f.name === file.name) === -1) {
-    //             uploaded.push(file);
-    //             if(uploaded.length === MAX_COUNT) setFileLimit(true);
-    //             if(uploaded.length > MAX_COUNT) {
-    //                 alert (`You can only add a maxium of ${MAX_COUNT} files`);
-    //                 setFileLimit(false);
-    //                 limitedExceeded = true;
-    //                 return true;
-    //             }
-    //         }
-    //     });
-    //     if (!limitedExceeded) setProject(uploaded);
-    // };
-
-    // const onFileUpload = (e) => {
-    //     const chosenFiles = Array.prototype.slice.call(e.target.files);
-    //     handleUploadFiles(chosenFiles);
-    // };
 
     const onEditorStateChange = (editorState) => {
         setEditorState( editorState );
@@ -102,17 +65,6 @@ const ProjectEditor = (props) => {
                         onEditorStateChange={onEditorStateChange}
                     />
                 </Form.Group>
-                {/* <Form.Group style={{margin: "1rem 0rem 0rem 0rem"}}>
-                    <Form.Label>Project Cover Image:</Form.Label>
-                    <Form.Control
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="projectImage"
-                        // value={project.projectImage || ""}
-                        onChange={(e)=> onFileLoad(e)}
-                    />
-                    <img src={project.projectImage} alt='Project Cover Image' />
-                </Form.Group> */}
                 <Form.Group style={{margin: "1rem 0rem 0rem 0rem"}}>
                     <Form.Label>Tags:</Form.Label>
                     <p>Please enter at least one project tag separated by commas (i.e. sewing, dress, flower, painting)</p>
@@ -128,32 +80,6 @@ const ProjectEditor = (props) => {
                     :null
                     }
                 </Form.Group>
-                {/* <Form.Group style={{margin: "1rem 0rem 0rem 0rem"}}>
-                    <Form.Label htmlFor='fileUpload'>
-                        <a className={`btn btn-primary btn-s ${!fileLimit ? '' : 'disabled'}`}>
-                            Project Images and Videos:
-                        </a>
-                    </Form.Label>
-                    <Form.Control
-                        type="file" 
-                        id='fileUpload'
-                        multiple
-                        accept="image/png, image/jpeg"
-                        value={project.projectMedia?.toString() || ""}
-                        name="projectMedia"
-                        onChange={(e)=> onFileUpload(e)}
-                        disabled={fileLimit}
-                    />
-                    <div className="uploaded-files-list">
-                        {project.projectMedia.map(file => (
-                            <div>
-                                <Container>
-                                    <img src={file.name} alt='project media' />
-                                </Container>
-                            </div>
-                        ))}
-                    </div>
-                </Form.Group> */}
                 <Form.Group>
                     <Row>
                         <Col style={{margin: "2rem 0rem"}}>
@@ -164,6 +90,33 @@ const ProjectEditor = (props) => {
                             Submit
                             </Button>
                         </Col>
+                    </Row>
+                </Form.Group>
+            </Form>
+            <Form onSubmit={coverPhotoHandler} style={{margin: "4rem 0rem"}}>
+                <Form.Group>
+                    <Form.Label>Project Cover Image:</Form.Label>
+                    <Form.Control
+                        name="coverImage"
+                        type="file"
+                        onChange={(e)=>setFile(e.target.files[0])}
+                    />
+                    <Row>
+                        <img 
+                            src={`http://localhost:8000/files/${project.projectImage}`} 
+                            alt="project cover photo"
+                            style={{width: "5rem", margin: "1rem 0rem"}}
+                        />
+                    </Row>
+                    <Row style={{padding:"0rem .5rem"}}>
+                        <Button 
+                            style={{margin: "2rem 0rem"}}
+                            type='submit'
+                            className="btn btn-primary btn-sm"
+                            style={{width:"6rem"}}
+                        >
+                        Add Photo
+                        </Button>
                     </Row>
                 </Form.Group>
             </Form>

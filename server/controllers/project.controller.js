@@ -19,6 +19,27 @@ module.exports = {
                 console.log(err);
             });
     },
+
+    uploadOneFile: (req, res) => {
+        console.log("upload req files", req.files);
+        req.files.file.mv(__dirname+'/../uploadFiles/'+req.files.file.name, (err)=> {
+            if(err){
+                console.log(err);
+                res.status(500).send(err);
+            }
+            else {
+                Project.findByIdAndUpdate({_id: req.params.id}, {projectImage: req.files.file.name})
+                    .then((newImage)=>{
+                        console.log(newImage);
+                        res.status(200).send('File Uploaded');
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                        res.status(500).send(err);
+                    });
+            }
+        });
+    },
     
     findAllProjectsByTag: (req, res) => {
         console.log(req.body.tagSearchTerms);
@@ -45,10 +66,6 @@ module.exports = {
             });
     },
 
-    // uploadFile: (req, res) => {
-    //     console.log(req.files.)
-    // },
-
     updateProject: (req, res) => {
         // console.log("!!!! cover image",req.files.projectImage);
         // console.log("**** req.body.projectImage", req.body.projectImage);
@@ -57,7 +74,6 @@ module.exports = {
             ...req.body, 
             creatorId: req.userId,
             tags: req.body.tags.split(',')
-            // projectMedia: req.body.projectMedia.split(',')
         };
         Project.findOneAndUpdate({_id: updateObject._id}, updateObject, {new:true, runValidators: true} )
         .then((updateProject)=>{
