@@ -26,12 +26,11 @@ const Header = () => {
     //         });
     // };
 
-    const createNew = ()=>{
-        navigate("/project/new");
-    };
-
     return (
         <Container>
+            <Row style={{padding: ".5rem"}}>
+                <h1 style={{margin: "1.5rem 0rem", padding: "0", fontWeight:"800", color: "blue"}}>CRAFT TRCKR</h1>
+            </Row>
             <Row>
                 <Col>
                     <UserLogo 
@@ -61,12 +60,6 @@ const Header = () => {
                                 />
                             </Form.Group>
                         </Form> */}
-                    </Row>
-                    <Row>
-                        <Button 
-                            onClick={createNew}
-                            className="btn btn-primary btn-sm" 
-                        >Create A New Project</Button>
                     </Row>
                 </Col>
             </Row>

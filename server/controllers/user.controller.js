@@ -34,6 +34,9 @@ module.exports = {
     },
 
     login: async(req, res) => {
+        if(!req.body.email || !req.body.password){
+            return res.status(400).send("something went wrong with login.");
+        }
         const user = await User.findOne({ email: req.body.email });
         if( user === null ) {
             return res.status(400).send("incorrect email");

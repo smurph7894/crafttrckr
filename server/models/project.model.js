@@ -5,7 +5,7 @@ const ProjectSchema = new mongoose.Schema({
     projectName: {
         type: String,
         unique: true,
-        required: true
+        required: [true, "You must have a Project Title."]
     },
     creatorId: {
         type: mongoose.Types.ObjectId,
@@ -26,6 +26,9 @@ const ProjectSchema = new mongoose.Schema({
     },
     content: {
         type: String
+    },
+    projectMedia: {
+        type: [String]
     }
 }, {timestamps: true});
 

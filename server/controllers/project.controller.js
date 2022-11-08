@@ -3,13 +3,20 @@ const Project = require('../models/project.model');
 module.exports = {
 
     createNewProject: (req, res)=> {
-        Project.create({...req.body, creatorId: req.userId})
+        const createObject = {
+            ...req.body, 
+            creatorId: req.userId,
+            tags: req.body.tags.split(',')
+        };
+        console.log(createObject);
+        Project.create(createObject)
             .then((newProject)=>{
                 res.json(newProject);
             })
             .catch((err)=>{
                 console.log("something went wrong with CREATE project");
                 res.status(400).json(err);
+                console.log(err);
             });
     },
     
@@ -38,12 +45,23 @@ module.exports = {
             });
     },
 
+    // uploadFile: (req, res) => {
+    //     console.log(req.files.)
+    // },
+
     updateProject: (req, res) => {
-        Project.findOneAndUpdate({_id: req.params.id, creatorId: req.userId },
-            req.body,
-            {new:true, runValidators: true}
-        )
+        // console.log("!!!! cover image",req.files.projectImage);
+        // console.log("**** req.body.projectImage", req.body.projectImage);
+        console.log("req.body", req.body);
+        const updateObject = {
+            ...req.body, 
+            creatorId: req.userId,
+            tags: req.body.tags.split(',')
+            // projectMedia: req.body.projectMedia.split(',')
+        };
+        Project.findOneAndUpdate({_id: updateObject._id}, updateObject, {new:true, runValidators: true} )
         .then((updateProject)=>{
+            console.log("server update project", updateProject);
             res.json(updateProject);
         })
         .catch((err)=>{

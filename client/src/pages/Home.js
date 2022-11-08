@@ -1,11 +1,12 @@
 import { useReactiveVar } from '@apollo/client';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate} from 'react-router-dom';
 import ProjectIcon from "../components/sub-components/ProjectIcon.js";
 import Header from "../components/Header";
 import { userState } from '../GlobalState.js';
+import Sidenav from '../components/Sidenav.js';
 
 const Home = () => {
 
@@ -25,19 +26,32 @@ const Home = () => {
             });
         }, [user._id]);
 
+    if(!userAndProjectList) {
+        return null;
+    }
+
     return (
         <Container>
-            <Header />
-            {userAndProjectList.projects.map((project,index)=>
-                <div key={index}>
-                    <p onClick={navigate(`/project/${project._id}`)}>{project.projectName}</p>
-                    <img 
-                        src={ project.projectImage? project.projectImage : <ProjectIcon /> } 
-                        alt= "Project Image"
-                        onClick={navigate(`/project/${project._id}`)}
-                    />
-                </div>
-            )}
+            <Row>
+                <Header />
+            </Row>
+            <Row>
+                <Col xs lg={3}>
+                    <Sidenav />
+                </Col>
+                <Col xs lg={9}>
+                    {userAndProjectList.projects.map((project,index)=>
+                    <div key={index}>
+                        <p onClick={()=>navigate(`/project/${project._id}`)}>{project.projectName}</p>
+                        {/* <img 
+                            src={ project.projectImage? project.projectImage : <ProjectIcon /> } 
+                            alt= "Project Image"
+                            onClick={navigate(`/project/${project._id}`)}
+                        /> */}
+                    </div>
+                    )}
+                </Col>
+            </Row>
         </Container>
     )
 }

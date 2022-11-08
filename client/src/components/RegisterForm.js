@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
-import ImageCollage from './ImageCollage';
 
 const RegisterForm = () => {
 
@@ -20,15 +19,17 @@ const RegisterForm = () => {
     const navigate = useNavigate();
 
     const newSubitHandler=(e)=>{
+        e.preventDefault();
         axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
             .then((res)=>{
-                console.log(res.data);
+                // console.log(res.data);
                 setUser(res.data.user);
-                navigate(`/user/${user._id}`);
+                navigate(`/home`);
             })
             .catch((err)=>{
-                console.log("error.response.data.errors", err.response.data.errors);
+                // console.log("error.response.data.errors", err.response.data.errors);
                 setError(err.response.data.errors);
+                // console.log("!!! error:", error);
             });
     };
 
@@ -53,12 +54,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="text"
                                     name="firstName"
-                                    value={newUser.name}
+                                    value={newUser.firstName}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.firstName?
+                                <Form.Text>{error.firstName.message}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -67,12 +68,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="text"
                                     name="lastName"
-                                    value={newUser.name}
+                                    value={newUser.lastName}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.lastName?
+                                <Form.Text>{error.lastName.message}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -81,12 +82,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="text"
                                     name="username"
-                                    value={newUser.name}
+                                    value={newUser.username}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.username?
+                                <Form.Text>{error.username.message}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -95,12 +96,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="text"
                                     name="email"
-                                    value={newUser.name}
+                                    value={newUser.email}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.email?
+                                <Form.Text>{"You must enter a valid and unique email."}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -109,12 +110,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="date"
                                     name="birthdate"
-                                    value={newUser.name}
+                                    value={newUser.birthdate}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.birthdate?
+                                <Form.Text>{"You must be at least 13 years old to create an account."}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -123,12 +124,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="password"
                                     name="password"
-                                    value={newUser.name}
+                                    value={newUser.password}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.password?
+                                <Form.Text>{error.password.message}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
@@ -137,12 +138,12 @@ const RegisterForm = () => {
                                 <Form.Control
                                     type="password"
                                     name="confirmedPassword"
-                                    value={newUser.name}
+                                    value={newUser.confirmedPassword}
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.name?
-                                <Form.Text>{error.name.message}</Form.Text>
+                                error.confirmPassword?
+                                <Form.Text>{error.confirmPassword.message}</Form.Text>
                                 :null
                                 }
                             </Form.Group>
