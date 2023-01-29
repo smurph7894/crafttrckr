@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const dbName = "craftTrckrDB";
 
-mongoose.connect(`mongodb://localhost/${dbName}`, {
+mongoose.connect(`mongodb://127.0.0.1/${dbName}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
