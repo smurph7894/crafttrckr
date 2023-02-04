@@ -5,23 +5,46 @@ import {Container, Col, Row, Button} from 'react-bootstrap';
 import Header from '../components/Header';
 import Sidenav from '../components/Sidenav';
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { useReactiveVar } from '@apollo/client';
+import { userState } from '../GlobalState';
 
-const DisplayProject = () => {
+const DisplayProject = (props) => {
 
     const {id} = useParams();
-    const [ project, setProject] = useState();
+    const user = useReactiveVar(userState);
+    // const [ project, setProject] = useState();
+    const {project} = props;
+    const [creatorInfo, setCreatorInfo] = useState();
     const navigate = useNavigate();
 
+    // useEffect(()=>{
+    //     console.log("id", id);
+    //     axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
+    //         .then((res)=>{
+    //             console.log(res.data);
+    //             setProject(res.data);
+    //         })
+    //         .catch((err)=>{
+    //             console.log(err);
+    //         });
+    // }, [id]);
+    
+    console.log("id", id);
+    console.log("project", project);
+    console.log("creatorId", project.creatorId);
+
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
+        if (user._id !== project.creatorId){
+            axios.get(`http://localhost:8000/api/crafttrckr/user/${project.creatorId}`)
             .then((res)=>{
                 console.log(res.data);
-                setProject(res.data);
+                setCreatorInfo(res.data);
             })
             .catch((err)=>{
                 console.log(err);
             });
-        }, [id]);
+        }
+    }, [user._id]);
 
     const deleteProject = () => {
         axios.delete(`http://localhost:8000/api/crafttrckr/project/${id}`)
@@ -41,6 +64,41 @@ const DisplayProject = () => {
             JSON.parse(project.content)));
     }, [project?.content]);
 
+    const creatorDiv = () => {
+        if (user._id !== project.creatorId){
+            return (
+                // <h6>Created By: {creatorInfo.firstName} {creatorInfo.lastName}</h6>
+                <h6>test</h6>
+        )} else {
+            return null
+        }};
+
+    const loggedIn = () => {
+        if (user._id === project.creatorId){
+            return (
+                <Row>
+                    <Col>
+                        <Button 
+                            onClick={()=>navigate(`/project/${id}/edit`)}
+                            style={{margin: "0rem 0rem .5rem .25rem"}}
+                        >Edit Project
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button 
+                            onClick={deleteProject}
+                            style={{margin: "0rem .25rem .5rem .5rem"}}
+                        >Delete
+                        </Button>
+                    </Col>
+                    <Col></Col>
+                    <Col></Col>
+                </Row>);
+        } else{
+            return null;
+        }
+    };
+
     if(!project) {
         return null;
     }
@@ -58,6 +116,7 @@ const DisplayProject = () => {
                     <Col xs lg={6}>
                         <Row>
                             <h2>{project.projectName}</h2>
+                            {creatorDiv()}
                             <Editor 
                                 editorState={editorState} 
                                 readOnly={true} 
@@ -74,27 +133,10 @@ const DisplayProject = () => {
                                 )}
                             </ul>
                         </Row>
-                        <Row>
-                            <Col>
-                                <Button 
-                                    onClick={()=>navigate(`/project/${id}/edit`)}
-                                    style={{margin: "0rem 0rem .5rem .25rem"}}
-                                >Edit Project
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button 
-                                    onClick={deleteProject}
-                                    style={{margin: "0rem .25rem .5rem .5rem"}}
-                                >Delete
-                                </Button>
-                            </Col>
-                            <Col></Col>
-                            <Col></Col>
-                        </Row>
+                        {loggedIn()}
                     </Col>
                     <Col xs lg={3}>
-                    <   img 
+                        <img 
                             src={`http://localhost:8000/files/${project.projectImage}`} 
                             alt="project cover photo"
                             style={{width: "20rem", margin: "1rem 0rem"}}

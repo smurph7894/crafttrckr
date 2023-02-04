@@ -5,6 +5,7 @@ import DisplayProject from './pages/DisplayProject';
 import NewProject from "./pages/NewProject";
 import UpdateProject from './pages/UpdateProject';
 import HomePage from './pages/HomePage';
+import AllMemberProjects from './pages/AllMemberProjects';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { userState } from './GlobalState';
@@ -28,22 +29,21 @@ function App() {
             });
     }, []);
 
-    console.log(user);
-
     if(!user && location.pathname !== "/" && location.pathname !== "/register"){
         return null;
     }
 
     return (
         <div>
-                <Routes>
-                    <Route element={<LoginPage/>} path="/" />
-                    <Route element={<Register/>} path="/register"/>
-                    <Route element={<HomePage/>} path="/home" />
-                    <Route element={<DisplayProject/>} path="/project/:id" />
-                    <Route element={<NewProject/>} path="/project/new" />
-                    <Route element={<UpdateProject/>} path="/project/:id/edit" />
-                </Routes>
+            <Routes>
+                <Route element={<LoginPage/>} path="/" />
+                <Route element={<Register/>} path="/register"/>
+                <Route element={<HomePage/>} path="/home" />
+                <Route element={<DisplayProject/>} path="/project/:id" />
+                <Route element={<AllMemberProjects/>} path="/project/AllMemberProjects" />
+                <Route element={<NewProject/>} path="/project/new" />
+                <Route element={<UpdateProject/>} path="/project/:id/edit" />
+            </Routes>
         </div>
     );
 }

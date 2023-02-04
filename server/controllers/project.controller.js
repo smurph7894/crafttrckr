@@ -67,6 +67,18 @@ module.exports = {
             });
     },
 
+    findAllProjects: (req, res) => {
+        Project.find({})
+            .then((allProjects)=>{
+                console.log(allProjects);
+                res.json(allProjects);
+            })
+            .catch((err) =>{
+                console.log("findAllProjects failed");
+                res.json({message:"Something went wrong with findAllProjects", error:err});
+            });
+    },
+
     updateProject: (req, res) => {
         // console.log("!!!! cover image",req.files.projectImage);
         // console.log("**** req.body.projectImage", req.body.projectImage);

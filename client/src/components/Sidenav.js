@@ -28,6 +28,7 @@ function Sidenav() {
                 <Nav className="flex-column" style={{border: "2px solid black"}}>
                         <Nav.Link style={{  borderBottom: "1px solid grey" }} href={`/home`}>Home</Nav.Link>
                         <Nav.Link style={{  borderBottom: "1px solid grey" }} href={`/project/new`}>Create Project</Nav.Link>
+                        <Nav.Link style={{  borderBottom: "1px solid grey" }} href={`/project/allMemberProjects`}>All Member Project</Nav.Link>
                         <Nav.Link onClick={logout}>Logout</Nav.Link>
                 </ Nav>
             </Col>
