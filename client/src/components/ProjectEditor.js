@@ -80,6 +80,29 @@ const ProjectEditor = (props) => {
                     :null
                     }
                 </Form.Group>
+                {/* following section is for deployed version using url image link */}
+                <Form.Group style={{margin: "1rem 0rem 0rem 0rem"}}>
+                    <Form.Label>Project Cover Image URL:</Form.Label>
+                    <Form.Control
+                        name="projectImage"
+                        type="text"
+                        value={project.projectImage}
+                        onChange={(e)=> onChangeHandler(e)}
+                    />
+                    {
+                    error.projectImage? 
+                    <Form.Text>{error.projectImage.message}</Form.Text>
+                    :null
+                    }
+                    <Row>
+                        <img 
+                            src={project.projectImage} 
+                            alt="project cover photo"
+                            style={{width: "5rem", margin: "1rem 0rem"}}
+                        />
+                    </Row>
+                </Form.Group>
+                {/* end of section for deployed url image  */}
                 <Form.Group>
                     <Row>
                         <Col style={{margin: "2rem 0rem"}}>
@@ -93,6 +116,7 @@ const ProjectEditor = (props) => {
                     </Row>
                 </Form.Group>
             </Form>
+            {/* only works for local host to save photos to desktop files 
             <Form onSubmit={coverPhotoHandler} style={{margin: "4rem 0rem"}}>
                 <Form.Group>
                     <Form.Label>Project Cover Image:</Form.Label>
@@ -108,18 +132,8 @@ const ProjectEditor = (props) => {
                             style={{width: "5rem", margin: "1rem 0rem"}}
                         />
                     </Row>
-                    <Row style={{padding:"0rem .5rem"}}>
-                        <Button 
-                            style={{margin: "2rem 0rem"}}
-                            type='submit'
-                            className="btn btn-primary btn-sm"
-                            style={{width:"6rem"}}
-                        >
-                        Add Photo
-                        </Button>
-                    </Row>
-                </Form.Group>
             </Form>
+            ** end desktop file save version */}
         </Container>
     )
 }

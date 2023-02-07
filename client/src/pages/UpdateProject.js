@@ -76,6 +76,7 @@ const UpdateProject = () => {
                             error={error}
                             setError={setError}
                             submitHandler={onEditProject}
+                            // line 80 only needed if saving files to local desktop files
                             coverPhotoHandler={onCoverImageUpload}
                             file={file}
                             setFile={setFile}

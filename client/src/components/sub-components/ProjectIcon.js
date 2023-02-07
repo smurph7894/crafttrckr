@@ -16,7 +16,9 @@ const ProjectIcon = (props) => {
             >
                 <Card.Title style = {{padding: ".25rem .5rem", fontSize:"1rem"}}>{oneProject.projectName}</Card.Title>
                 <Card.Img variant='top' 
-                    src={`http://localhost:8000/files/${oneProject.projectImage}`} 
+                    // below src only works if using commented out code to save to local desktop and on local host.
+                    // src={`http://localhost:8000/files/${oneProject.projectImage}`} 
+                    src={oneProject.projectImage}
                     alt={`${oneProject.projectName} cover photo`}
                     style = {{display: "block", marginLeft:"auto", marginRight:"auto", width:"6rem"}}
                 />

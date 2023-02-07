@@ -12,30 +12,28 @@ const DisplayProject = (props) => {
 
     const {id} = useParams();
     const user = useReactiveVar(userState);
-    // const [ project, setProject] = useState();
-    const {project} = props;
+    const [ project, setProject] = useState();
     const [creatorInfo, setCreatorInfo] = useState();
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     console.log("id", id);
-    //     axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
-    //         .then((res)=>{
-    //             console.log(res.data);
-    //             setProject(res.data);
-    //         })
-    //         .catch((err)=>{
-    //             console.log(err);
-    //         });
-    // }, [id]);
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
+            .then((res)=>{
+                console.log(res.data);
+                setProject(res.data);
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
+    }, [id]);
     
     console.log("id", id);
     console.log("project", project);
-    console.log("creatorId", project.creatorId);
+    console.log("creatorId", project?.creatorId);
 
     useEffect(()=>{
-        if (user._id !== project.creatorId){
-            axios.get(`http://localhost:8000/api/crafttrckr/user/${project.creatorId}`)
+        if (project){
+            axios.get(`http://localhost:8000/api/crafttrckr/user/${project?.creatorId}`)
             .then((res)=>{
                 console.log(res.data);
                 setCreatorInfo(res.data);
@@ -44,7 +42,9 @@ const DisplayProject = (props) => {
                 console.log(err);
             });
         }
-    }, [user._id]);
+    }, [user._id, project]);
+
+    console.log("creatorInfo", creatorInfo);
 
     const deleteProject = () => {
         axios.delete(`http://localhost:8000/api/crafttrckr/project/${id}`)
@@ -65,10 +65,11 @@ const DisplayProject = (props) => {
     }, [project?.content]);
 
     const creatorDiv = () => {
-        if (user._id !== project.creatorId){
+        if (project && user._id !== creatorInfo?.user._id){
+            console.log("user._id", user._id);
+            console.log("creatorInfo?.user._id", creatorInfo?.user._id);
             return (
-                // <h6>Created By: {creatorInfo.firstName} {creatorInfo.lastName}</h6>
-                <h6>test</h6>
+                <h6>Created By: {creatorInfo?.user.firstName} {creatorInfo?.user.lastName} </h6>
         )} else {
             return null
         }};
@@ -136,8 +137,15 @@ const DisplayProject = (props) => {
                         {loggedIn()}
                     </Col>
                     <Col xs lg={3}>
-                        <img 
+                        {/* use commented version if using on local host to save photos to desktop files */}
+                        {/* <img 
                             src={`http://localhost:8000/files/${project.projectImage}`} 
+                            alt="project cover photo"
+                            style={{width: "20rem", margin: "1rem 0rem"}}
+                        /> */}
+                        {/* below version works for deployment */}
+                        <img 
+                            src={project.projectImage} 
                             alt="project cover photo"
                             style={{width: "20rem", margin: "1rem 0rem"}}
                         />

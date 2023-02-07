@@ -15,4 +15,10 @@ http://34.220.179.145/
 
 ### Images
 
-* Please note that in the deployed version the image upload does not currently upload. Currently they are saved on the web server. Ideally in future I'd use S3 or another equivlient. 
+* Please note that in the deployed version the image upload currently uses the image url and the file loader is commented out. The file option is saved on the web server and does not work when deployed. Ideally in future I'd use S3 or another equivlient to make the image file upload work in a deployed environment. 
+
+If on localhost and you'd like the images to be saved as files, uncomment the noted sections in:
+
+DisplayProject
+ProjectEditor
+ProjectIcon
