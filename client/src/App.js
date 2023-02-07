@@ -28,7 +28,7 @@ function App() {
                 log(err);
                 navigate("/");
             });
-    }, [navigate]);
+    }, []);
 
     if(!user && location.pathname !== "/" && location.pathname !== "/register"){
         return null;
