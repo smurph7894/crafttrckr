@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import axios from 'axios';
+// import axios from 'axios';
 import React, {useState} from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -9,10 +9,10 @@ import { userState } from '../GlobalState';
 const Header = () => {
 
     const user = useReactiveVar(userState);
-    const [projectTagSearch, setProjectTagSearch] = useState();
-    const [projectSearchList, setProjectSearchList] = useState();
+    // const [projectTagSearch, setProjectTagSearch] = useState();
+    // const [projectSearchList, setProjectSearchList] = useState();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // const onSubmitSearch = (e) => {
     //     e.preventDefault();

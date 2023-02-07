@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
 import Register from './pages/Register';
 import DisplayProject from './pages/DisplayProject';
@@ -28,7 +28,7 @@ function App() {
                 log(err);
                 navigate("/");
             });
-    }, []);
+    }, [navigate]);
 
     if(!user && location.pathname !== "/" && location.pathname !== "/register"){
         return null;

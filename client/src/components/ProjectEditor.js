@@ -1,15 +1,13 @@
 import { useReactiveVar } from '@apollo/client';
-import { ContentState, convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import React, { useState } from 'react';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { Editor} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { userState } from '../GlobalState';
 import log from '../helpers/logging';
 
 const ProjectEditor = (props) => {
 
-    const user = useReactiveVar(userState);
     const {project, error, setError, setProject, submitHandler, coverPhotoHandler, file, setFile } = props;
     const [editorState, setEditorState] = useState( project.content? EditorState.createWithContent(convertFromRaw(
         JSON.parse(project.content)

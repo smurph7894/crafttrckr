@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Login from '../components/Login';
 import ImageCollage from '../components/ImageCollage';
 import {Container, Col, Row} from 'react-bootstrap';
