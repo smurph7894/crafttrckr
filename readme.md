@@ -15,10 +15,45 @@ http://34.220.179.145/
 
 ### Images
 
-* Please note that in the deployed version the image upload currently uses the image url and the file loader is commented out. The file option is saved on the web server and does not work when deployed. Ideally in future I'd use S3 or another equivlient to make the image file upload work in a deployed environment. 
+Please note that in the deployed version the image upload currently uses the image url and the file loader is commented out. The file option is saved on the web server and does not work when deployed. Ideally in future I'd use S3 or another equivlient to make the image file upload work in a deployed environment. 
 
 If on localhost and you'd like the images to be saved as files, uncomment the noted sections in:
 
 DisplayProject
 ProjectEditor
 ProjectIcon
+
+
+### Purpose
+* To be a location people can save their own projects craft or otherwise with instructions, image, etc for tracking of progress or to share with others. Future versions could include a discussion board, project tag search, project commenting, and project liking. 
+
+### Functionality
+Basic CRUD functions (user and project) - see server folder, routes and controller files.
+
+### Dependencies
+React
+express
+bootstrap
+draft-js
+
+### To Run Locally
+
+Pull repository to VS Code
+
+Create a mongo database and make sure line 6 in moongoose.config file the address matches your personal database location. 
+
+Open VS Code window for CRAFTTRCKR/server
+    - open terminal
+    - type "nodemon serer.js" 
+    - enter
+
+open another VS Code window for CRAFTTRCKR/client
+    - open another terminal
+    - type npm i
+    - enter
+    - add .env file noted above and save
+    - type npm start
+    - enter
+
+Project should open up and run in your browser on local host. 
+
