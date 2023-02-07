@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {Navigate, useNavigate, useParams} from "react-router-dom";
+import React from 'react';
+import {useNavigate} from "react-router-dom";
 import {Card} from 'react-bootstrap';
 
 const ProjectIcon = (props) => {

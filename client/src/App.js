@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { userState } from './GlobalState';
 import { useReactiveVar } from '@apollo/client';
+import log from './helpers/logging';
 
 axios.defaults.withCredentials=true;
 
@@ -24,7 +25,7 @@ function App() {
                 userState(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
                 navigate("/");
             });
     }, []);

@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const Project = require('../models/project.model');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const log = require("../helpers/logging");
 
 module.exports = {
 
@@ -12,14 +13,14 @@ module.exports = {
                     id: newUser._id
                 };
                 const userToken = jwt.sign(payload, process.env.FIRST_SECRET_KEY);
-                console.log("register res.data", newUser);
-                console.log("register userToken", userToken);
+                log("register res.data", newUser);
+                log("register userToken", userToken);
                 res.cookie("jwt-token", userToken, { httpOnly: true }).json(
                     newUser
                 );
             })
             .catch((err)=>{
-                console.log("something went wrong with CREATE user");
+                log("something went wrong with CREATE user");
                 res.status(400).json(err);
             });
     },
@@ -27,11 +28,11 @@ module.exports = {
     loggedInUser: (req, res)=> {
         User.findOne({_id: req.userId},{password: 0})
             .then((loggedUser)=>{
-                console.log(loggedUser);
+                log(loggedUser);
                 res.json(loggedUser);
             })
             .catch ((err)=>{
-                console.log("find LOGGED IN users failed");
+                log("find LOGGED IN users failed");
             });
     },
 
@@ -65,7 +66,7 @@ module.exports = {
                 res.json(allUsers);
             })
             .catch((err)=>{
-                console.log("find ALL users failed");
+                log("find ALL users failed");
                 res.json({message: "something went wrong in findALL users", error: err});
             });
     },
@@ -104,7 +105,7 @@ module.exports = {
         })
         .catch((err)=>{
             res.status(400).json(err);
-            console.log("Something went wrong in update user");
+            log("Something went wrong in update user");
         });
     },
 
@@ -120,7 +121,7 @@ module.exports = {
             })
             .catch((err)=>{
                 res.json({message: "Something went wrong in delete user", error: err});
-                console.log("delete user failed");
+                log("delete user failed");
             });
     }
 };

@@ -1,41 +1,42 @@
 const Project = require('../models/project.model');
+const log = require("../helpers/logging");
 
 module.exports = {
 
     createNewProject: (req, res)=> {
-        console.log(req.body.tags);
+        log(req.body.tags);
         const createObject = {
             ...req.body, 
             creatorId: req.userId,
             tags: req.body.tags ? req.body.tags.split(',') : []
         };
-        console.log(createObject);
+        log(createObject);
         Project.create(createObject)
             .then((newProject)=>{
                 res.json(newProject);
             })
             .catch((err)=>{
-                console.log("something went wrong with CREATE project");
+                log("something went wrong with CREATE project");
                 res.status(400).json(err);
-                console.log(err);
+                log(err);
             });
     },
 
     uploadOneFile: (req, res) => {
-        console.log("upload req files", req.files);
+        log("upload req files", req.files);
         req.files.file.mv(__dirname+'/../uploadFiles/'+req.files.file.name, (err)=> {
             if(err){
-                console.log(err);
+                log(err);
                 res.status(500).send(err);
             }
             else {
                 Project.findByIdAndUpdate({_id: req.params.id}, {projectImage: req.files.file.name})
                     .then((newImage)=>{
-                        console.log(newImage);
+                        log(newImage);
                         res.status(200).send('File Uploaded');
                     })
                     .catch((err)=>{
-                        console.log(err);
+                        log(err);
                         res.status(500).send(err);
                     });
             }
@@ -43,7 +44,7 @@ module.exports = {
     },
     
     findAllProjectsByTag: (req, res) => {
-        console.log(req.body.tagSearchTerms);
+        log(req.body.tagSearchTerms);
         //tagSearchTerms is === tags in model
         const tagArray = req.body.tagSearchTerms.split(" ");
         const regexSearch = tagArray.join("|");
@@ -52,7 +53,7 @@ module.exports = {
                 res.json(allUsers);
             })
             .catch((err)=>{
-                console.log("find ALL users failed");
+                log("find ALL users failed");
                 res.json({message: "something went wrong in findALL projects", error: err});
             });
     },
@@ -70,19 +71,19 @@ module.exports = {
     findAllProjects: (req, res) => {
         Project.find({})
             .then((allProjects)=>{
-                console.log(allProjects);
+                log(allProjects);
                 res.json(allProjects);
             })
             .catch((err) =>{
-                console.log("findAllProjects failed");
+                log("findAllProjects failed");
                 res.json({message:"Something went wrong with findAllProjects", error:err});
             });
     },
 
     updateProject: (req, res) => {
-        // console.log("!!!! cover image",req.files.projectImage);
-        // console.log("**** req.body.projectImage", req.body.projectImage);
-        console.log("req.body", req.body);
+        // log("!!!! cover image",req.files.projectImage);
+        // log("**** req.body.projectImage", req.body.projectImage);
+        log("req.body", req.body);
         const updateObject = {
             ...req.body, 
             creatorId: req.userId,
@@ -90,12 +91,12 @@ module.exports = {
         };
         Project.findOneAndUpdate({_id: updateObject._id}, updateObject, {new:true, runValidators: true} )
         .then((updateProject)=>{
-            console.log("server update project", updateProject);
+            log("server update project", updateProject);
             res.json(updateProject);
         })
         .catch((err)=>{
             res.status(400).json(err);
-            console.log("Something went wrong in update project");
+            log("Something went wrong in update project");
         });
     },
 
@@ -106,7 +107,7 @@ module.exports = {
             })
             .catch((err)=>{
                 res.json({message: "Something went wrong in delete project", error: err});
-                console.log("delete project failed");
+                log("delete project failed");
             });
     }
 };

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
 import { userState } from '../GlobalState';
+import log from '../helpers/logging';
 
 const Login = () => {
 
@@ -15,14 +16,12 @@ const Login = () => {
         e.preventDefault();
         axios.post("http://localhost:8000/api/crafttrckr/user/login", {email: userEmail, password: userPassword})
             .then((res)=>{
-                console.log(res.data.user);
+                log(res.data.user);
                 userState(res.data.user);
                 navigate(`/home`);
             })
             .catch((err)=>{
-                console.log("****  error", err);
-                console.log("****  error.response.data", err.response.data);
-                console.log("error.response.data.errors:", err.response.data.errors);
+                log("error.response.data.errors:", err.response.data.errors);
                 setError("Your email or password is incorrect. ");
             });
     };

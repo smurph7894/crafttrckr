@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
 import { userState } from '../GlobalState';
+import log from '../helpers/logging';
 
 const RegisterForm = () => {
 
@@ -22,14 +23,14 @@ const RegisterForm = () => {
         e.preventDefault();
         axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
             .then((res)=>{
-                console.log("registerForm", res.data);
+                log("registerForm", res.data);
                 userState(res.data);
                 navigate(`/home`);
             })
             .catch((err)=>{
-                // console.log("error.response.data.errors", err.response.data.errors);
+                // log("error.response.data.errors", err.response.data.errors);
                 setError(err.response.data.errors);
-                // console.log("!!! error:", error);
+                // log("!!! error:", error);
             });
     };
 

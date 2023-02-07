@@ -1,33 +1,29 @@
-import { useReactiveVar } from '@apollo/client';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import {useParams} from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import ProjectIcon from "../components/sub-components/ProjectIcon.js";
 import Header from "../components/Header";
-import { userState } from '../GlobalState.js';
 import Sidenav from '../components/Sidenav.js';
+import log from '../helpers/logging.js';
 
 const AllMemberProjects = () => {
 
-    const {id} = useParams();
-    const user = useReactiveVar(userState);
     const [ allProjects, setAllProjects] = useState([]);
 
     useEffect(()=>{
-        console.log("test print");
+        log("test print");
         if(allProjects.length === 0){
         axios.get("http://localhost:8000/api/crafttrckr/project/AllMemberProjects")
             .then((res)=>{
-                console.log(res.data);
+                log(res.data);
                 setAllProjects(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
         }}, [allProjects]);
 
-    console.log("All Projects", allProjects);
+    log("All Projects", allProjects);
 
     if(allProjects.length === 0) {
         return null;

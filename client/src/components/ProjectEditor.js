@@ -5,6 +5,7 @@ import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { Editor} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { userState } from '../GlobalState';
+import log from '../helpers/logging';
 
 const ProjectEditor = (props) => {
 
@@ -15,13 +16,13 @@ const ProjectEditor = (props) => {
     )) : EditorState.createEmpty());
 
     const onChangeHandler = (e)=>{
-        console.log("e",e);
+        log("e",e);
         const newProjectObject = {...project};
 
         newProjectObject[e.target.name] = e.target.value;
 
-        console.log("e.target.name = ", e.target.name);
-        console.log("e.target.value = ", e.target.value);
+        log("e.target.name = ", e.target.name);
+        log("e.target.value = ", e.target.value);
 
         setProject(newProjectObject);
     };
@@ -37,7 +38,7 @@ const ProjectEditor = (props) => {
         return null;
     };
 
-    console.log(project);
+    log(project);
 
     return (
         <Container>

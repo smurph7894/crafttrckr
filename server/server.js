@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 const fileUpload = require("express-fileupload");
 const port = 8000;
+const log = require("./helpers/logging");
 
 app.use(express.json());
 app.use(fileUpload())
@@ -21,5 +22,5 @@ app.use('/files', express.static('uploadFiles'));
 require("./config/mongoose.config");
 require("./routes/craftTrckr.routes")(app);
 
-app.listen(port, () => console.log(`listening on port: ${port}`));
+app.listen(port, () => log(`listening on port: ${port}`));
 

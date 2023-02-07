@@ -6,6 +6,7 @@ import ProjectIcon from "./sub-components/ProjectIcon.js";
 import Header from "./Header";
 import { userState } from '../GlobalState.js';
 import Sidenav from './Sidenav.js';
+import log from '../helpers/logging.js';
 
 const Home = () => {
 
@@ -15,15 +16,15 @@ const Home = () => {
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/crafttrckr/user/${user._id}`)
             .then((res)=>{
-                console.log(res.data);
+                log(res.data);
                 setUserAndProjectList(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
         }, [user._id]);
 
-    console.log(userAndProjectList);
+    log(userAndProjectList);
 
     if(!userAndProjectList) {
         return null;

@@ -7,6 +7,7 @@ import Sidenav from '../components/Sidenav';
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
 import { useReactiveVar } from '@apollo/client';
 import { userState } from '../GlobalState';
+import log from '../helpers/logging';
 
 const DisplayProject = (props) => {
 
@@ -19,32 +20,32 @@ const DisplayProject = (props) => {
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
             .then((res)=>{
-                console.log(res.data);
+                log(res.data);
                 setProject(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
     }, [id]);
     
-    console.log("id", id);
-    console.log("project", project);
-    console.log("creatorId", project?.creatorId);
+    log("id", id);
+    log("project", project);
+    log("creatorId", project?.creatorId);
 
     useEffect(()=>{
         if (project){
             axios.get(`http://localhost:8000/api/crafttrckr/user/${project?.creatorId}`)
             .then((res)=>{
-                console.log(res.data);
+                log(res.data);
                 setCreatorInfo(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
         }
     }, [user._id, project]);
 
-    console.log("creatorInfo", creatorInfo);
+    log("creatorInfo", creatorInfo);
 
     const deleteProject = () => {
         axios.delete(`http://localhost:8000/api/crafttrckr/project/${id}`)
@@ -52,7 +53,7 @@ const DisplayProject = (props) => {
                 navigate("/home");
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
     };
 
@@ -62,12 +63,12 @@ const DisplayProject = (props) => {
         }
         return EditorState.createWithContent(convertFromRaw(
             JSON.parse(project.content)));
-    }, [project?.content]);
+    }, [project]);
 
     const creatorDiv = () => {
         if (project && user._id !== creatorInfo?.user._id){
-            console.log("user._id", user._id);
-            console.log("creatorInfo?.user._id", creatorInfo?.user._id);
+            log("user._id", user._id);
+            log("creatorInfo?.user._id", creatorInfo?.user._id);
             return (
                 <h6>Created By: {creatorInfo?.user.firstName} {creatorInfo?.user.lastName} </h6>
         )} else {

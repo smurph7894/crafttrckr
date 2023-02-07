@@ -1,13 +1,12 @@
-import { useReactiveVar } from '@apollo/client';
 import axios from 'axios';
-import React, { useEffect } from 'react';
-import {Col, Container, Nav, Navbar} from 'react-bootstrap';
+import React from 'react';
+import {Col, Container, Nav} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { userState } from '../GlobalState';
+import log from '../helpers/logging';
 
 function Sidenav() {
 
-    const user = useReactiveVar(userState);
     const navigate = useNavigate();
 
     const logout = () => {
@@ -17,7 +16,7 @@ function Sidenav() {
                 navigate(`/`);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
         };
 
@@ -38,9 +37,9 @@ function Sidenav() {
     )
 }
 
-{/* <h3>Profile</h3>
+/* <h3>Profile</h3>
 <h3>Profile</h3>
 <h3>Discussion Boards</h3>
 <h3>Following</h3>
-<h3>Logout</h3> */}
+<h3>Logout</h3> */
 export default Sidenav

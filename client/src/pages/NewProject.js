@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Button, Col, Container, Form, Row} from 'react-bootstrap';
 import Header from '../components/Header';
 import Sidenav from '../components/Sidenav';
+import log from '../helpers/logging';
 
 const NewProject = () => {
 
@@ -23,13 +24,13 @@ const NewProject = () => {
         e.preventDefault();
         axios.post("http://localhost:8000/api/crafttrckr/project", newProject)
             .then((res)=>{
-                console.log("******",res);
-                // console.log("!!!!! project",res.data.project);
+                log("******",res);
+                // log("!!!!! project",res.data.project);
                 navigate(`/project/${res.data._id}/edit`);
             })
             .catch((err)=>{
-                console.log(err);
-                console.log("error.response.data.errors:", err.response.data.errors);
+                log(err);
+                log("error.response.data.errors:", err.response.data.errors);
                 if(err.response.data.code === 11000){
                     setError({projectName: {message: "Your Project Title must be unique."}});
                 }
@@ -43,15 +44,15 @@ const NewProject = () => {
     };
 
     const onChangeHandler = (e)=>{
-        console.log("changehandler");
+        log("changehandler");
         const newProjectObject = {...newProject};
-        console.log("one", newProjectObject);
+        log("one", newProjectObject);
         newProjectObject[e.target.name] = e.target.value;
-        console.log("e.target.name = ", e.target.name);
+        log("e.target.name = ", e.target.name);
         setNewProject(newProjectObject);
     };
 
-    console.log(error);
+    log(error);
 
     return (
         <Container>

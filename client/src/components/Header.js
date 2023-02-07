@@ -18,11 +18,11 @@ const Header = () => {
     //     e.preventDefault();
     //     axios.get('http://localhost:8000/api/crafttrckr/project/search/tags', {projectTagSearch})
     //         .then((res)=> {
-    //             console.log("res.data");
+    //             log("res.data");
     //             setProjectSearchList(res.data);
     //         })
     //         .catch((err)=>{
-    //             console.log(err);
+    //             log(err);
     //         });
     // };
 

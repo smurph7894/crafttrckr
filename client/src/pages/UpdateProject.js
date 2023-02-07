@@ -5,6 +5,7 @@ import {Container, Col, Row} from 'react-bootstrap';
 import Sidenav from '../components/Sidenav';
 import ProjectEditor from '../components/ProjectEditor';
 import Header from '../components/Header';
+import log from '../helpers/logging';
 
 const UpdateProject = () => {
 
@@ -16,12 +17,12 @@ const UpdateProject = () => {
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
             .then((res)=>{
-                console.log("****", res);
+                log("****", res);
                 const newProject = {...res.data, tags: res.data.tags.join(",")};
                 setEditProject(newProject);
             })
             .catch((err)=>{
-                console.log(err);
+                log(err);
             });
     }, [id]);
 
@@ -29,12 +30,12 @@ const UpdateProject = () => {
         e.preventDefault();
         axios.put(`http://localhost:8000/api/crafttrckr/project/${id}`, editProject)
             .then((res)=>{
-                console.log("******",res);
+                log("******",res);
                 refreshPage();
             })
             .catch((err)=>{
-                console.log(err);
-                console.log("error.response.data.errors:", err.response.data.errors);
+                log(err);
+                log("error.response.data.errors:", err.response.data.errors);
                 setError(err.response.data.errors);
             });
     };
