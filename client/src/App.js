@@ -1,4 +1,4 @@
-import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import {Routes, Route, useNavigate, useLocation, Navigate} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
 import Register from './pages/Register';
 import DisplayProject from './pages/DisplayProject';
@@ -7,43 +7,61 @@ import UpdateProject from './pages/UpdateProject';
 import HomePage from './pages/HomePage';
 import AllMemberProjects from './pages/AllMemberProjects';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { userState } from './GlobalState';
 import { useReactiveVar } from '@apollo/client';
 import log from './helpers/logging';
 
 axios.defaults.withCredentials=true;
 
+const ProtectedRoute = ({children}) => {
+    const user = useReactiveVar(userState);
+    const [apiComplete, setApiComplete] = useState(user?true:false);
+
+    console.log(user);
+
+    useEffect(()=>{
+        if(!user){
+            axios.get(`http://localhost:8000/api/crafttrckr/logginguser`)
+                .then((res)=> {
+                    userState(res.data);
+                    setApiComplete(true);
+                })
+                .catch((err)=>{
+                    log(err);
+                    //below set api is neccessary so you can get to the navigate to login if the api call fails
+                    setApiComplete(true);
+                });
+        };
+    }, [user]);
+
+    //stops rendering protected pages or navigating to login until useEffect has run. 
+    if(!apiComplete){
+        return null;
+    };
+
+    if(!user) {
+        return <Navigate to="/"/>;
+    }
+
+    return children;
+};
+
 function App() {
     const user = useReactiveVar(userState);
     const navigate = useNavigate();
     const location = useLocation();
-
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/logginguser`)
-            .then((res)=> {
-                userState(res.data);
-            })
-            .catch((err)=>{
-                log(err);
-                navigate("/");
-            });
-    }, []);
-
-    if(!user && location.pathname !== "/" && location.pathname !== "/register"){
-        return null;
-    }
 
     return (
         <div>
             <Routes>
                 <Route element={<LoginPage/>} path="/" />
                 <Route element={<Register/>} path="/register"/>
-                <Route element={<HomePage/>} path="/home" />
-                <Route element={<DisplayProject/>} path="/project/:id" />
-                <Route element={<AllMemberProjects/>} path="/project/AllMemberProjects" />
-                <Route element={<NewProject/>} path="/project/new" />
-                <Route element={<UpdateProject/>} path="/project/:id/edit" />
+                <Route element={<ProtectedRoute> <HomePage/> </ProtectedRoute>} path="/home" />
+                <Route element={<ProtectedRoute> <DisplayProject/> </ProtectedRoute>} path="/project/:id" />
+                <Route element={<ProtectedRoute> <AllMemberProjects/> </ProtectedRoute>} path="/project/AllMemberProjects" />
+                <Route element={<ProtectedRoute> <NewProject/> </ProtectedRoute>} path="/project/new" />
+                <Route element={<ProtectedRoute> <UpdateProject/> </ProtectedRoute>} path="/project/:id/edit" />
             </Routes>
         </div>
     );

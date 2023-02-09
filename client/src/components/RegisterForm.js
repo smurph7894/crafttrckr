@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Container, Form, Col, Row, Button} from 'react-bootstrap';
@@ -19,8 +19,25 @@ const RegisterForm = () => {
 
     const navigate = useNavigate();
 
+    const emailValid = useMemo(()=>{
+        const isValid = /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(newUser.email);
+        const isEmpty = newUser.email.length === 0;
+
+        return {
+            isValid,
+            isEmpty
+        }
+    }, [newUser.email]);
+
+    log("test", !!error.email || (!emailValid.isValid && !emailValid.isEmpty));
+
     const newSubitHandler=(e)=>{
         e.preventDefault();
+        console.log("emailValid", emailValid);
+        if(!emailValid.isValid || emailValid.isEmpty){
+            setError({email: true});
+            return ;
+        }
         axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
             .then((res)=>{
                 log("registerForm", res.data);
@@ -101,7 +118,7 @@ const RegisterForm = () => {
                                     onChange={(e)=> onChangeHandler(e)}
                                 />
                                 {
-                                error.email?
+                                !!error.email || (!emailValid.isValid && !emailValid.isEmpty)?
                                 <Form.Text>{"You must enter a valid and unique email."}</Form.Text>
                                 :null
                                 }
