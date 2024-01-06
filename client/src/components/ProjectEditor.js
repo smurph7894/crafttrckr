@@ -126,7 +126,7 @@ const ProjectEditor = (props) => {
                     />
                     <Row>
                         <img 
-                            src={`http://localhost:8000/files/${project.projectImage}`} 
+                            src={`http://localhost:8080/files/${project.projectImage}`} 
                             alt="project cover photo"
                             style={{width: "5rem", margin: "1rem 0rem"}}
                         />

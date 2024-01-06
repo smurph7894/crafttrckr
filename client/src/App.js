@@ -22,7 +22,7 @@ const ProtectedRoute = ({children}) => {
 
     useEffect(()=>{
         if(!user){
-            axios.get(`http://localhost:8000/api/crafttrckr/logginguser`)
+            axios.get(`http://localhost:8080/api/crafttrckr/logginguser`)
                 .then((res)=> {
                     userState(res.data);
                     setApiComplete(true);

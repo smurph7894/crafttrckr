@@ -14,7 +14,7 @@ const Home = () => {
     const [ userAndProjectList, setUserAndProjectList] = useState();
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/user/${user._id}`)
+        axios.get(`http://localhost:8080/api/crafttrckr/user/${user._id}`)
             .then((res)=>{
                 log(res.data);
                 setUserAndProjectList(res.data);

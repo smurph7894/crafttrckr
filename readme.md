@@ -57,3 +57,17 @@ open another VS Code window for CRAFTTRCKR/client
 
 Project should open up and run in your browser on local host. 
 
+
+
+
+docker run -d -p 27017:27017 --name mongo -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=toor mongo
+
+docker run -d -p 8000:8000 --name express-app -e FIRST_SECRET_KEY="enter yours here" -e SECOND_SECRET_KEY="enter yours here" -e USERNAME=root -e PASSWORD=toor my-express-app
+
+docker run -d -p 3000:3000 --name react-app my-react-app
+
+docker run -d -p 8080:8080 --name nginx-app my-nginx-app
+
+docker build -t my-express-app .
+docker build -t my-react-app .
+docker build -t my-nginx-app .

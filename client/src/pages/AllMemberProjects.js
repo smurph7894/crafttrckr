@@ -13,7 +13,7 @@ const AllMemberProjects = () => {
     useEffect(()=>{
         log("test print");
         if(allProjects.length === 0){
-        axios.get("http://localhost:8000/api/crafttrckr/project/AllMemberProjects")
+        axios.get("http://localhost:8080/api/crafttrckr/project/AllMemberProjects")
             .then((res)=>{
                 log(res.data);
                 setAllProjects(res.data);

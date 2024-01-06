@@ -18,7 +18,7 @@ const DisplayProject = (props) => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
+        axios.get(`http://localhost:8080/api/crafttrckr/project/${id}`)
             .then((res)=>{
                 log(res.data);
                 setProject(res.data);
@@ -34,7 +34,7 @@ const DisplayProject = (props) => {
 
     useEffect(()=>{
         if (project){
-            axios.get(`http://localhost:8000/api/crafttrckr/user/${project?.creatorId}`)
+            axios.get(`http://localhost:8080/api/crafttrckr/user/${project?.creatorId}`)
             .then((res)=>{
                 log(res.data);
                 setCreatorInfo(res.data);
@@ -48,7 +48,7 @@ const DisplayProject = (props) => {
     log("creatorInfo", creatorInfo);
 
     const deleteProject = () => {
-        axios.delete(`http://localhost:8000/api/crafttrckr/project/${id}`)
+        axios.delete(`http://localhost:8080/api/crafttrckr/project/${id}`)
             .then((res)=>{
                 navigate("/home");
             })
@@ -140,7 +140,7 @@ const DisplayProject = (props) => {
                     <Col xs lg={3}>
                         {/* use commented version if using on local host to save photos to desktop files */}
                         {/* <img 
-                            src={`http://localhost:8000/files/${project.projectImage}`} 
+                            src={`http://localhost:8080/files/${project.projectImage}`} 
                             alt="project cover photo"
                             style={{width: "20rem", margin: "1rem 0rem"}}
                         /> */}

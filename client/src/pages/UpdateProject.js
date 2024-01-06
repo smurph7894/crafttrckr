@@ -15,7 +15,7 @@ const UpdateProject = () => {
     const [file, setFile] = useState();
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/crafttrckr/project/${id}`)
+        axios.get(`http://localhost:8080/api/crafttrckr/project/${id}`)
             .then((res)=>{
                 log("****", res);
                 const newProject = {...res.data, tags: res.data.tags.join(",")};
@@ -28,7 +28,7 @@ const UpdateProject = () => {
 
     const onEditProject=(e)=>{
         e.preventDefault();
-        axios.put(`http://localhost:8000/api/crafttrckr/project/${id}`, editProject)
+        axios.put(`http://localhost:8080/api/crafttrckr/project/${id}`, editProject)
             .then((res)=>{
                 log("******",res);
                 refreshPage();
@@ -45,7 +45,7 @@ const UpdateProject = () => {
         const formData = new FormData();
         formData.append('file', file);
         axios.post(
-            `http://localhost:8000/api/crafttrckr/project/${id}/addFile`, 
+            `http://localhost:8080/api/crafttrckr/project/${id}/addFile`, 
             formData, 
             {headers:{"Content-Type": "multipart/form-data"}}
         );

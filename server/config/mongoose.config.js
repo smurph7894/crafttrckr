@@ -5,7 +5,11 @@ const dbName = "craftTrckrDB";
 
 mongoose.connect(`mongodb://127.0.0.1/${dbName}`, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    auth: {
+        username: process.env.USERNAME,
+        password: process.env.PASSWORD
+    }
 })
     .then(()=>{
         log(`You are connected to the database called ${dbName}`);

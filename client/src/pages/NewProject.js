@@ -22,7 +22,7 @@ const NewProject = () => {
 
     const onNewProjectSubmitted=(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:8000/api/crafttrckr/project", newProject)
+        axios.post("http://localhost:8080/api/crafttrckr/project", newProject)
             .then((res)=>{
                 log("******",res);
                 // log("!!!!! project",res.data.project);

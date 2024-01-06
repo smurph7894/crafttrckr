@@ -14,7 +14,7 @@ const Login = () => {
 
     const onLoginHandler=(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:8000/api/crafttrckr/user/login", {email: userEmail, password: userPassword})
+        axios.post("http://localhost:8080/api/crafttrckr/user/login", {email: userEmail, password: userPassword})
             .then((res)=>{
                 log(res.data.user);
                 userState(res.data.user);

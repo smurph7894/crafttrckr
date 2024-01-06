@@ -38,7 +38,7 @@ const RegisterForm = () => {
             setError({email: true});
             return ;
         }
-        axios.post("http://localhost:8000/api/crafttrckr/user/register", newUser)
+        axios.post("http://localhost:8080/api/crafttrckr/user/register", newUser)
             .then((res)=>{
                 log("registerForm", res.data);
                 userState(res.data);

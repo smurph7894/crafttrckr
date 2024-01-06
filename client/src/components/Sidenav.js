@@ -10,7 +10,7 @@ function Sidenav() {
     const navigate = useNavigate();
 
     const logout = () => {
-        axios.post(`http://localhost:8000/api/crafttrckr/user/logout`)
+        axios.post(`http://localhost:8080/api/crafttrckr/user/logout`)
             .then((res)=>{
                 userState(undefined);
                 navigate(`/`);
